@@ -1,0 +1,13 @@
+SELECT 
+E.EmployeeID, E.LastName, COUNT(E.EmployeeID) AS TotalOrdersLate
+FROM 
+Employees E
+JOIN Orders O 
+ON
+E.EmployeeID = O.EmployeeID
+WHERE
+ShippedDate > RequiredDate
+GROUP BY
+E.EmployeeID, E.LastName
+ORDER BY
+TotalOrdersLate DESC

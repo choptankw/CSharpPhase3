@@ -1,0 +1,34 @@
+WITH 
+AllOrders AS
+(
+SELECT 
+EmployeeID, COUNT(*) as AllOrders
+FROM
+Orders
+GROUP BY
+EmployeeID
+),
+
+LateOrders AS
+(
+SELECT
+EmployeeID, COUNT(*) AS LateOrders
+FROM
+Orders
+WHERE
+ShippedDate > RequiredDate
+GROUP BY 
+EmployeeID
+)
+
+SELECT 
+Employees.EmployeeID, Employees.LastName,
+AllOrders.AllOrders, LateOrders.LateOrders
+FROM
+Employees
+JOIN AllOrders ON
+Employees.EmployeeID = AllOrders.EmployeeID
+JOIN LateOrders ON
+Employees.EmployeeID = LateOrders.EmployeeID
+ORDER BY
+Employees.EmployeeID ASC
